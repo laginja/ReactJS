@@ -5,6 +5,7 @@ import { createStore } from 'redux';
 // Equal to: const { incrementBy = 1} = payload     -> object destructuring (payload just an object name)
 // Default value {} must be set
 const incrementCount = ({ incrementBy = 1 } = {}) => {
+    // return an object
     return {
         type: 'INCREMENT',
         // check if incrementBy is set in the dispatch
@@ -33,7 +34,11 @@ const resetCount = () => {
     }
 };
 
-const store = createStore((state = {count: 0}, action) => {
+// Reducers
+// 1. Reducers are pure functions - output is determined only by input
+// 2. Never change state or action
+
+const countReducer = (state = {count: 0}, action) => {
     switch(action.type) {
         case 'INCREMENT':
             return {
@@ -54,7 +59,9 @@ const store = createStore((state = {count: 0}, action) => {
         default:
             return state;
     }
-});
+};
+
+const store = createStore(countReducer);
 
 // Automatically executes the function whenever the store changes
 // it returns a function so if we call unsubscribe() somewhere we will stop looking for changes from that point on

@@ -13,6 +13,7 @@ const ExpenseList = (props) => (
     </div>
 );
 
+// This allows us to use the redux store object and mapp it to the props of the componnent we select
 const mapStateToProps = (state) => {
     return {
         expenses: selectExpenses(state.expenses, state.filters)

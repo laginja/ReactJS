@@ -8,6 +8,7 @@ import configureStore from './store/configureStore'
 /* this resets the css for all browsers */
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
+import './firebase/firebase';
 
 const store = configureStore();
 

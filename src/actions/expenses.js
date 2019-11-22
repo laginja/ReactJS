@@ -11,7 +11,7 @@ import database from '../firebase/firebase';
 
 // WORKFLOW WITH ASYNC : 
 // component call action generator
-// action generator returns function
+// action generator returns function that does some asynchronous work
 // component dispatches function (?)
 // function runs (has the ability to dispatch other actions and do whatever it wants)
 
@@ -26,6 +26,7 @@ export const addExpense =  (expense) => {
 // ASYNC action that is responsible for fetching data from firebase
 export const startAddExpense = (expenseData = {}) => {
     // this works cause we added a middleware 'redux-trunk'
+    // 'dispatch' gets passed here through the redux library
     return (dispatch) => {
         // setting default values for expenseData object
         const {
@@ -37,7 +38,7 @@ export const startAddExpense = (expenseData = {}) => {
 
         const expense = { description, notes, amount, createdAt };
 
-        database.ref('expenses').push(expense).then((ref) => {
+        return database.ref('expenses').push(expense).then((ref) => {
             //  after the data if pushed, call dispatch to add data to redux store
             dispatch(addExpense({
                 id: ref.key,
@@ -48,12 +49,21 @@ export const startAddExpense = (expenseData = {}) => {
 };
 
 // REMOVE_EXPENSE
-export const removeExpense = ({id} = {}) => {
+export const removeExpense = ({ id }) => {
     return {
         type: 'REMOVE_EXPENSE',
         id: id
     }
 };
+
+//ASYNC action
+export const startRemoveExpense = ({ id } = {}) => {
+    return (dispatch) => {
+        return database.ref(`expenses/${id}`).remove().then(() =>{
+            dispatch(removeExpense({id}));
+        });
+    }
+}; 
 
 // EDIT_EXPENSE
 export const editExpense = (id, updates) => {
@@ -61,6 +71,15 @@ export const editExpense = (id, updates) => {
         type: 'EDIT_EXPENSE',
         id: id,
         updates: updates
+    }
+};
+
+// ASYNC action
+export const startEditExpense = (id, updates) => {
+    return (dispatch) => {
+        return database.ref(`expenses/${id}`).update(updates).then(() => {
+            dispatch(editExpense(id, updates));
+        });
     }
 };
 

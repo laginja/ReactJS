@@ -16,7 +16,11 @@ firebase.initializeApp(firebaseConfig);
 
 const database = firebase.database();
 
-export { firebase, database as default };
+// Provider is a way to provide authentication. 
+// We have all sorts of providers (Google, Facebook, twitter,...)
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
+export { firebase, googleAuthProvider, database as default };
 
 // // child_removed subscriber
 // database.ref('expenses').on('child_removed', (snapshot) => {

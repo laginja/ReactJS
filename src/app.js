@@ -39,7 +39,7 @@ firebase.auth().onAuthStateChanged((user) => {
         // save the userID in redux store.
         // We dispatch from here (and not from /actions/auth) because this is going to
         // run even when the user first visit the web page. This will make sure that
-        // we immediatelly know if the user visiting the site is logged in or not. If 
+        // we immediately know if the user visiting the site is logged in or not. If 
         // we put it inside the /actions/auth (like we did in the other cases) we would
         // only set the state when the user logins or logouts.
         store.dispatch(login(user.uid));

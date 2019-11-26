@@ -1,3 +1,9 @@
+// universal selector for calculating the height of elements
+* {
+    
+    box-sizing: border-box;
+}
+
 html {
     /* 1 rem = 16px */
     /* with this base conversion, 1 rem is 16px * .625 = 10px */
@@ -5,8 +11,10 @@ html {
 }
 
 body {
+    color: $dark-grey;
     font-family: Helvetica, Arial, sans-serif;
     font-size: $m-size;
+    line-height: 1.6;
 }
 
 button {
